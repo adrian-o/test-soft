@@ -1,5 +1,8 @@
 package br.com.softplan.test.custotransporte.controllers;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.softplan.test.custotransporte.exceptions.ServiceException;
 import br.com.softplan.test.custotransporte.models.CalculoCusto;
+import br.com.softplan.test.custotransporte.models.domains.TipoVeiculoEnum;
 import br.com.softplan.test.custotransporte.services.CalculoService;
 
 @Controller
@@ -26,14 +30,16 @@ public class CalculoCustoController {
 			BindingResult bindingResult, Model model) {
 		
 		if (bindingResult.hasErrors()) {
-			return "redirect:/index";
+			List<TipoVeiculoEnum> veiculos = Arrays.asList(TipoVeiculoEnum.values());
+			model.addAttribute("veiculos", veiculos);
+			return "home/index";
 		}
 		
 		try {
 			this.calculoCustoService.calculaValorTotal(calculoCusto);
 		} catch (ServiceException se) {
 			model.addAttribute("message", se.getMessage());
-			return "redirect:/index";
+			return "home/index";
 		}
 		
 		model.addAttribute("resultado", calculoCusto);
