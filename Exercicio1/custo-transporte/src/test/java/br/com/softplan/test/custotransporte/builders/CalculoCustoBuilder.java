@@ -1,6 +1,9 @@
 package br.com.softplan.test.custotransporte.builders;
 
+import static br.com.softplan.test.custotransporte.models.domains.TipoRodoviaEnum.RODOVIA_PAVIMENTADA;
+
 import br.com.softplan.test.custotransporte.models.CalculoCusto;
+import br.com.softplan.test.custotransporte.models.domains.TipoRodoviaEnum;
 import br.com.softplan.test.custotransporte.models.domains.TipoVeiculoEnum;
 
 public class CalculoCustoBuilder {
@@ -49,6 +52,24 @@ public class CalculoCustoBuilder {
 	
 	public CalculoCustoBuilder comCargaMaiorQue5Toneladas() {
 		this.calculoCusto.setCargaTon(6);
+		return this;
+	}
+	
+	public CalculoCustoBuilder comCargaMaiorEmToneladas(Integer toneladas) {
+		this.calculoCusto.setCargaTon(toneladas);
+		return this;
+	}
+	
+	public CalculoCustoBuilder comDistanciaEmRodovia(TipoRodoviaEnum rodovia, Integer distancia) {
+		switch (rodovia) {
+			case RODOVIA_PAVIMENTADA:
+				this.calculoCusto.setDistanciaRodoviaPav(distancia);
+				break;
+			case RODOVIA_NAO_PAVIMENTADA:
+				this.calculoCusto.setDistanciaRodoviaNaoPav(distancia);
+				break;
+		}
+		
 		return this;
 	}
 }

@@ -71,7 +71,7 @@ public class CalculoCustoComTransporteServiceTest {
 	@Test
 	public void deveRecalcularCustoDeAcordoComFatorDeRecalculoPorTipoVeiculo() throws ServiceException {
 		// ação
-		BigDecimal custoAposFator = CustoVeiculoUtils.recalcularCustoPorFatorVeiculo(new BigDecimal("10.00"), calculoCusto.getTipoVeiculo());
+		BigDecimal custoAposFator = CustoVeiculoUtils.recalcularCustoPorFatorVeiculo(new BigDecimal("10.00"), calculoCusto);
 		
 		// validação
 		assertThat(custoAposFator, is(new BigDecimal(custoPorVeiculo)));

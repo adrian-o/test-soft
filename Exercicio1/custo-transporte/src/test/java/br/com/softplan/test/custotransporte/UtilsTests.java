@@ -1,6 +1,7 @@
 package br.com.softplan.test.custotransporte;
 
 import static br.com.softplan.test.custotransporte.builders.CalculoCustoBuilder.umCalculoCusto;
+import static br.com.softplan.test.custotransporte.models.domains.TipoRodoviaEnum.RODOVIA_NAO_PAVIMENTADA;
 import static br.com.softplan.test.custotransporte.models.domains.TipoRodoviaEnum.RODOVIA_PAVIMENTADA;
 import static br.com.softplan.test.custotransporte.utils.CustoCargaUtils.calcularCustoPorExcessoCarga;
 import static br.com.softplan.test.custotransporte.utils.CustoRodoviasUtils.custoPorRodovia;
@@ -13,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.softplan.test.custotransporte.models.CalculoCusto;
+import br.com.softplan.test.custotransporte.models.domains.TipoRodoviaEnum;
 
 public class UtilsTests {
 
@@ -25,8 +27,12 @@ public class UtilsTests {
 	
 	@Test
 	public void deveCalcularCustoPorExcessoCargaQuandoToneladasUltrapassaremLimiteDe5() {
+		// cenário
+		TipoRodoviaEnum rodovia = RODOVIA_NAO_PAVIMENTADA;
+		custo = umCalculoCusto().comDistanciaEmRodovia(rodovia, 25).comCargaMaiorEmToneladas(10).agora();
+		
 		// ação
-		BigDecimal custoExcesso = calcularCustoPorExcessoCarga(new BigDecimal("20.00"), 10, 25);
+		BigDecimal custoExcesso = calcularCustoPorExcessoCarga(new BigDecimal("20.00"), rodovia, custo);
 		
 		// validação
 		assertThat(custoExcesso, is(new BigDecimal("22.50")));
@@ -35,7 +41,7 @@ public class UtilsTests {
 	@Test
 	public void naoDeveCalcularCustoPorExcessoCargaQuandoToneladas_Nao_UltrapassaremLimiteDe5() {
 		// ação
-		BigDecimal custoExcesso = calcularCustoPorExcessoCarga(new BigDecimal("20.00"), 5, 25);
+		BigDecimal custoExcesso = calcularCustoPorExcessoCarga(new BigDecimal("20.00"), RODOVIA_NAO_PAVIMENTADA, custo);
 		
 		// validação
 		assertThat(custoExcesso, is(new BigDecimal("20.00")));
@@ -47,7 +53,7 @@ public class UtilsTests {
 		custo = umCalculoCusto().semDistanciaEmRodoviaPavimentada().agora();
 		
 		// ação
-		BigDecimal custoZero = custoPorRodovia(RODOVIA_PAVIMENTADA, custo.getDistanciaRodoviaPav());
+		BigDecimal custoZero = custoPorRodovia(RODOVIA_PAVIMENTADA, custo);
 		
 		// validação
 		assertThat(custoZero, is(BigDecimal.ZERO.setScale(2)));
@@ -56,7 +62,7 @@ public class UtilsTests {
 	@Test
 	public void deveCalcularCustoQuandoHaDistanciaParaRodovia() {
 		// ação
-		BigDecimal custoZero = custoPorRodovia(RODOVIA_PAVIMENTADA, custo.getDistanciaRodoviaPav());
+		BigDecimal custoZero = custoPorRodovia(RODOVIA_PAVIMENTADA, custo);
 		
 		// validação
 		assertThat(custoZero, is(new BigDecimal("24.30")));

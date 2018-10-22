@@ -5,14 +5,14 @@ import static java.math.RoundingMode.HALF_DOWN;
 
 import java.math.BigDecimal;
 
-import br.com.softplan.test.custotransporte.models.domains.TipoVeiculoEnum;
+import br.com.softplan.test.custotransporte.models.CalculoCusto;
 
 public class CustoVeiculoUtils {
 	
-	public static BigDecimal recalcularCustoPorFatorVeiculo(BigDecimal custo, TipoVeiculoEnum veiculo) {
+	public static BigDecimal recalcularCustoPorFatorVeiculo(BigDecimal custoCalculado, CalculoCusto custo) {
 		return multiplicar(
-					custo.setScale(2, HALF_DOWN),
-					veiculo.getFatorMultiplicador().setScale(2, HALF_DOWN)
+					custoCalculado.setScale(2, HALF_DOWN),
+					custo.getTipoVeiculo().getFatorMultiplicador().setScale(2, HALF_DOWN)
 				).setScale(2, HALF_DOWN);
 	}
 }
