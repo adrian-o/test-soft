@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://thymeleaf.org/"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout/"
+	layout:decorator="layout">
+
+	<th:block layout:fragment="content">
+		<div class="col-xs-12 col-md-12 text-center">
+		<div class="alert alert-danger" th:if="${msg_resultado}">
+			<a href="#" class="close" data-dismiss="alert">&times;</a>						 	
+	 		<p id="message" th:text="${message}" ></p>		
+	 	</div>
+		<div class="card">
+			<div class="card-header">
+				Calcular custo
+			</div>
+			<div class="card-block">
+				<form action="" th:action="@{/calculos/}" th:object="${calculoCusto}" th:method="post">
+					<div class="form-group">
+						<input type="text" th:field="*{distanciaRodoviaPav}" name="distanciaRodoviaPav" placeholder="Rodovia pavimentada:" class="form-control" />
+					</div>	
+					<div class="form-group">
+						<input type="text" th:field="*{distanciaRodoviaNaoPav}" name="distanciaRodoviaPav" placeholder="Rodovia n&atilde;o pavimentada:" class="form-control"/>
+					</div>	
+					<div class="form-group">
+						<select th:field="*{tipoVeiculo}" class="custom-select">
+							<!-- option th:each="tipoVeiculo : ${veiculos}" th:value="*{tipoVeiculo.id}" th:text="${tipoVeiculo.descricao}"></option-->
+							<option th:each="tipoVeiculo : ${veiculos}"
+            						th:value="${tipoVeiculo}"
+            						th:text="${tipoVeiculo.label}"></option>
+						</select>
+					</div>
+					<div class="form-group">
+						<input type="text" th:field="*{cargaTon}" name="cargaTon" placeholder="Carga (em toneladas)" class="form-control"/>
+						<span class="text-danger" th:if="${#fields.hasErrors('cargaTon')}" th:errors="*{cargaTon}">Erro no preenchimento da carga</span>
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary">Calcular</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		</div>
+	</th:block>
+</html>

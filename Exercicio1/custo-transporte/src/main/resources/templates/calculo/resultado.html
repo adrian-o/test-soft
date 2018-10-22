@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://thymeleaf.org/"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout/"
+	layout:decorator="layout">
+
+	<th:block layout:fragment="content">
+		<div class="col-xs-12 col-md-12">			
+			<div class="card">
+				<div class="card-header">
+					Resultado
+				</div>
+				<div class="card-block">
+					<ul>
+						<li>
+							Dist&acirc;ncia em rodovias pavimentadas: 
+							<span th:text="${resultado.distanciaRodoviaPav}"></span>
+						</li>
+						<li>
+							Dist&acirc;ncia em rodovias n&atilde;o pavimentadas:
+							<span th:text="${resultado.distanciaRodoviaNaoPav}"></span>
+						</li>
+						<li>
+							Ve&iacute;culo:
+							<span th:text="${resultado.tipoVeiculo.label}"></span>
+						</li>
+						<li>
+							Carga (em toneladas):
+							<span th:text="${resultado.cargaTon}"></span>
+						</li>
+						<li>
+							Valor Total:
+							R$ <span th:text="${resultado.valorTotal}"></span>
+						</li>
+					</ul>
+				</div>
+			</div>	
+			<a href="/" class="btn btn-secondary">Realizar Novo C&aacute;lculo</a>
+		</div>
+	</th:block>
+</html>
