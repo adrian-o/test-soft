@@ -6,7 +6,6 @@
 	<groupId>br.com.softplan.test</groupId>
 	<artifactId>custo-transporte</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
 
 	<name>custo-transporte</name>
 	<description>Projeto test para seleção da empresa Softplan</description>
@@ -27,21 +26,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -66,6 +56,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>custo-transporte</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
