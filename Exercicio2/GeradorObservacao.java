@@ -1,48 +1,45 @@
 
-import java.util.Iterator;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GeradorObservacao { 
 
 	//Textos pré-definidos
-	static final String umoNota = "Fatura da nota fiscal de simples remessa: ";
+	static final String TEXTO_UMA_NOTA = "Fatura da nota fiscal de simples remessa: ";
+	static final String TEXTO_NOTAS = "Fatura das notas fiscais de simples remessa: ";
+	
 	//Identificador da entidade
-	String texto;
+	StringBuilder texto = new StringBuilder();
 		
 	//Gera observações, com texto pre-definido, incluindo os números, das notas fiscais, recebidos no parâmetro
-	public String geraObservacao(List lista) 
-	{
-		texto = "";
-		if (!lista.isEmpty()) 
-		{
-			return retornaCodigos(lista) + ".";
+	public String geraObservacao(List<Integer> lista) {
+		if (!lista.isEmpty()) {
+			return retornaCodigos(lista);
 		}		
-		return "";		
+		return texto.toString();		
 	}
 
 	//Cria observação
-	private String retornaCodigos(List lista) {
-		if (lista.size() >= 2) {
-			texto = "Fatura das notas fiscais de simples remessa: ";
-		} else {
-			texto = umoNota;
-		}
+	private String retornaCodigos(List<Integer> lista) {
+		// Configura texto inicial
+		String textoInicial = lista.size()>1 ? TEXTO_NOTAS : TEXTO_UMA_NOTA;
 		
-		//Acha separador
+		// Monta mensagem a partir da lista
 		StringBuilder cod = new StringBuilder();
-		for (Iterator<Integer> iterator = lista.iterator(); iterator.hasNext();) {
-			Integer c = iterator.next();
-			String s = "";
-			if( cod.toString() == null || cod.toString().length() <= 0 )
-				s =  "";
-				else if( iterator.hasNext() )
-					s =  ", ";
-				else
-					s =  " e ";
-			
-			cod.append(s + c);
-		}
+		AtomicInteger index = new AtomicInteger();
+		Arrays.stream(lista.toArray())
+			.forEach(item -> {
+				cod.append(item).append(defineSeparador(lista, index.getAndIncrement()));
+		}); 
 		
-		return texto + cod;
+		return texto.append(textoInicial).append(cod).toString();
 	}
+	
+	//Acha separador
+	private String defineSeparador(List<Integer> lista, Integer index) {
+		return (index == lista.size()-1) ? "." :  
+					((index == lista.size()-2) ? " e " : ", ");
+	}
+	
 }
